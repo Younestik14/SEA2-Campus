@@ -368,10 +368,35 @@
         </div>
     </div>
 
-    <!-- Cargar lecciones del repositorio -->
-    <script src="lessons.js"></script>
-
     <script>
+        // Array global de lecciones integrado directamente
+        window.lessons = [
+            {
+                id: 1,
+                title: "Unidad 1: Introducción a los Sistemas Automatizados",
+                description: "Conceptos básicos de automatización industrial, arquitecturas y componentes de control.",
+                content: "<p>Esta unidad introduce los conceptos fundamentales de los sistemas de automatización industrial, el papel de los autómatas programables (PLC) y la estructura general de los procesos automatizados.</p>"
+            },
+            {
+                id: 2,
+                title: "Unidad 2: Esquemas Eléctricos y Simulación",
+                description: "Representación simbólica, lectura de planos y simulación en software especializado.",
+                content: "<p>Aprende las normativas técnicas de diseño eléctrico, la identificación de componentes en esquemas (fuerza y maniobra) y el uso de herramientas de simulación CAD.</p>"
+            },
+            {
+                id: 3,
+                title: "Unidad 3: Programación de Autómatas Programables (PLC)",
+                description: "Lenguajes de programación estándar (Ladder, FBD) y lógica de control.",
+                content: "<p>Estudio de los lenguajes según la norma IEC 61131-3, estructuración de programas de control, marcas, temporizadores y contadores.</p>"
+            },
+            {
+                id: 4,
+                title: "Unidad 4: Sensores y Actuadores Industriales",
+                description: "Dispositivos de entrada y salida en entornos industriales y sus aplicaciones.",
+                content: "<p>Análisis de captadores de presencia, sensores analógicos de temperatura/presión y accionamientos como contactores, variadores de frecuencia y cilindros neumáticos.</p>"
+            }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             let userProgress = getStoredProgress();
             let currentActiveFilter = 'all';
@@ -387,7 +412,7 @@
             const modalBody = document.getElementById('modal-body');
             const markCompleteBtn = document.getElementById('mark-complete-btn');
 
-            const savedTheme = localStorage.getItem('sea2_theme') || 'light';
+            const savedTheme = localStorage.getItem('sea2_theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
             themeToggleBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 
@@ -419,7 +444,7 @@
 
             markCompleteBtn.addEventListener('click', () => {
                 if (activeLessonId) {
-                    userProgress[activeLessonId] = true;
+                    userProgress[activeLessonId] = !userProgress[activeLessonId];
                     saveProgress(userProgress);
                     updateProgressUI();
                     renderLessons();
@@ -429,7 +454,7 @@
 
             function renderLessons() {
                 grid.innerHTML = '';
-                const lessonList = (typeof lessons !== 'undefined' && Array.isArray(lessons)) ? lessons : [];
+                const lessonList = window.lessons || [];
 
                 const filtered = lessonList.filter(lesson => {
                     const isCompleted = !!userProgress[lesson.id];
@@ -439,7 +464,7 @@
                 });
 
                 if (filtered.length === 0) {
-                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No hay lecciones disponibles.</p>';
+                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No se encontraron lecciones en esta sección.</p>';
                     return;
                 }
 
@@ -471,7 +496,7 @@
             }
 
             function openLessonModal(id) {
-                const lessonList = (typeof lessons !== 'undefined' && Array.isArray(lessons)) ? lessons : [];
+                const lessonList = window.lessons || [];
                 const lesson = lessonList.find(l => l.id == id);
                 if (!lesson) return;
 
@@ -480,8 +505,7 @@
                 modalBody.innerHTML = lesson.content || '<p>Contenido no disponible.</p>';
 
                 const isCompleted = !!userProgress[lesson.id];
-                markCompleteBtn.textContent = isCompleted ? 'Completada' : 'Marcar como Completada';
-                markCompleteBtn.style.opacity = isCompleted ? '0.7' : '1';
+                markCompleteBtn.textContent = isCompleted ? 'Marcar como Pendiente' : 'Marcar como Completada';
 
                 modal.classList.remove('hidden');
                 modal.setAttribute('aria-hidden', 'false');
@@ -494,7 +518,7 @@
             }
 
             function updateProgressUI() {
-                const lessonList = (typeof lessons !== 'undefined' && Array.isArray(lessons)) ? lessons : [];
+                const lessonList = window.lessons || [];
                 if (lessonList.length === 0) return;
 
                 const total = lessonList.length;
