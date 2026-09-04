@@ -1,223 +1,187 @@
-/* SEA2 Campus · v4 definitiva — contenido curricular + herramientas educativas */
-const CURRICULUM_SOURCE='Real Decreto 1127/2010 (BOE) + distribución del boletín aportado para Murcia';
-const MODULES=[
-{code:'0522',short:'Redes y CT',name:'Desarrollo de redes eléctricas y centros de transformación',hours:'120 h · 6 h/sem',ects:'10 ECTS',color:'network',desc:'Redes de distribución, líneas aéreas y subterráneas, cálculo y configuración, centros de transformación, maniobras, puesta a tierra y ensayos.',ras:['Identificar los elementos que configuran las redes de distribución y su normativa.','Caracterizar redes de distribución de baja tensión y calcular sus parámetros.','Configurar redes aéreas o subterráneas seleccionando elementos y representándolos en planos.','Caracterizar centros de transformación, sus celdas, elementos y maniobras.','Configurar CT de interior o intemperie, calculando magnitudes y puesta a tierra.','Realizar operaciones de montaje, puesta en servicio, mantenimiento, medidas y ensayos de redes y CT.'],units:[
-['01','Sistema eléctrico y redes','Estructura del sistema eléctrico; clasificación de redes; telecontrol; redes aéreas; apoyos; conductores; accesorios; redes subterráneas; zanjas; galerías; señalización; normativa.'],
-['02','Redes de baja tensión','Topologías, trazado, parámetros, conductores, cálculo de magnitudes, representación en planos, criterios técnicos y reglamentarios.'],
-['03','Diseño de redes','Hipótesis de diseño, punto de conexión, trazado, cálculos eléctricos y mecánicos, puesta a tierra, selección de materiales, planos y listado de equipos.'],
-['04','Centros de transformación','Tipos de CT, celdas, transformadores, embarrados, protecciones, señalización, maniobras, montaje e interconexiones.'],
-['05','Configuración y ensayos de CT','Cálculo de magnitudes, puesta a tierra, selección de equipos, esquemas, mantenimiento, ensayos y tensiones de paso/contacto.']],
-calc:['power3','drop1','transformer','resistance'],practice:['Dimensionar una línea de BT a partir de potencia, tensión y longitud y justificar las comprobaciones.','Identificar en un esquema las funciones de las celdas de un CT.','Calcular la relación de transformación de un transformador y explicar su significado.'],mistakes:['Confundir tensión de línea y tensión de fase.','Elegir una sección solo por intensidad sin comprobar caída de tensión y condiciones de instalación.','Olvidar que los cálculos reales dependen de normativa, método de instalación y datos de fabricante.'],check:['Datos de partida y unidades revisados','Trazado y esquema unifilar revisados','Cálculo eléctrico documentado','Selección de conductores/protecciones justificada','Puesta a tierra y seguridad consideradas','Planos y listado de materiales coherentes']},
-{code:'0602',short:'Gestión',name:'Gestión del montaje y del mantenimiento de instalaciones eléctricas',hours:'100 h · 5 h/sem',ects:'6 ECTS',color:'management',desc:'Aprovisionamiento, almacén, planificación del montaje, control de obra, puesta en servicio, mantenimiento y gestión de residuos.',ras:['Organizar el aprovisionamiento relacionando proyecto, materiales, fases y condiciones de suministro.','Definir recepción y abastecimiento de materiales aplicando técnicas de almacén y control de stocks.','Planificar montajes en edificios y líneas de distribución mediante fases, recursos y cronogramas.','Gestionar el montaje controlando avance, recursos, indicadores y seguridad.','Documentar la puesta en servicio con mediciones, ensayos y requisitos de aceptación.','Planificar mantenimiento preventivo/correctivo y gestión de residuos.'],units:[
-['01','Aprovisionamiento','Partes del proyecto aplicables al montaje, certificación de obra, procesos de aprovisionamiento, codificación y diagramas de flujo.'],
-['02','Almacén y stocks','Tipos de almacén, documentación, recepción, entregas, descuentos/tarifación, control de existencias y almacén de obra.'],
-['03','Planificación del montaje','Proyecto de obra, fases, recursos humanos y materiales, medios de protección, puntos críticos y temporalización.'],
-['04','Gestión y control','Plan de montaje, control de avance, indicadores, gestión de personal/materiales y normativa de seguridad.'],
-['05','Puesta en servicio','Procedimientos, aparatos de medición, valores de aceptación, ensayos de protecciones, armónicos, perturbaciones y verificaciones.'],
-['06','Mantenimiento y residuos','Mantenimiento preventivo/correctivo, instrucciones de fabricante, indicadores, stocks, residuos y plan de mantenimiento.']],
-calc:['budget','maintenance','stock'],practice:['Crear un cronograma de montaje con fases, recursos y puntos críticos.','Diseñar un plan básico de mantenimiento preventivo para un cuadro eléctrico.','Resolver una incidencia de suministro y documentar una solución alternativa.'],mistakes:['No relacionar aprovisionamiento y plan de montaje.','No definir responsables, criterios de aceptación o trazabilidad.','Cerrar una intervención sin registrar medidas, incidencias y acciones.'],check:['Plan de aprovisionamiento','Control de recepción','Cronograma','Recursos y responsables','Puesta en servicio documentada','Plan de mantenimiento y residuos']},
-{code:'0517',short:'ICT',name:'Procesos en instalaciones de infraestructuras comunes de telecomunicaciones',hours:'140 h · 7 h/sem',ects:'8 ECTS',color:'ict',desc:'ICT en edificios: radio y televisión, telefonía, distribución, fibra, medidas, puesta en servicio, mantenimiento y seguridad.',ras:['Caracterizar instalaciones ICT identificando redes, recintos, canalizaciones, equipos y simbología.','Configurar y dimensionar elementos de instalaciones de radio/TV, telefonía y control de accesos.','Planificar y ejecutar el montaje de infraestructuras de telecomunicaciones.','Verificar funcionamiento mediante parámetros, instrumentos, ajustes y medidas.','Mantener instalaciones ICT localizando averías y documentando reparaciones.','Aplicar prevención de riesgos, protección ambiental y normativa de ICT.'],units:[
-['01','Arquitectura ICT','Normativa de aplicación, tipos de instalaciones, recintos, registros, canalizaciones, redes y simbología.'],
-['02','Radio y televisión','Elementos de captación, antenas, cabecera, amplificación, distribución, dispersión, red interior y parámetros.'],
-['03','Telefonía y acceso','Sistemas de telefonía, centrales, interfonía, porteros, control de accesos y elementos asociados.'],
-['04','Fibra y cableado','Tendido de conductores, coaxial, pares, fibra óptica y técnicas de conexionado.'],
-['05','Medidas y puesta en servicio','Niveles, pérdidas, ganancias, ajustes, orientación, instrumentos, verificaciones y documentación.'],
-['06','Mantenimiento ICT','Inspecciones, puntos de control, instrumentos, averías, reparación, documentación y PRL.']],
-calc:['db','dbm','attenuation'],practice:['Construir un balance de señal desde cabecera hasta una toma.','Identificar dónde medir si el nivel de una toma es insuficiente.','Diferenciar ganancia, atenuación, nivel y margen.'],mistakes:['Confundir ganancia con pérdida.','Sumar dB sin saber qué magnitud representa cada valor.','No indicar el punto exacto de entrada y salida del balance.'],check:['Topología y redes identificadas','Elementos seleccionados','Balance de niveles','Puntos de medida','Verificación documentada','Prevención y seguridad']},
-{code:'0521',short:'Domótica y automática',name:'Técnicas y procesos en instalaciones domóticas y automáticas',hours:'180 h · 9 h/sem',ects:'12 ECTS',color:'automation',desc:'Automatización industrial, cuadros, motores, sensores, actuadores, neumática, PLC, GRAFCET, domótica, inmótica y diagnóstico.',ras:['Caracterizar instalaciones y dispositivos de automatización en edificios e industria.','Planificar el montaje de instalaciones automáticas con recursos, tiempos y pruebas.','Montar automatismos industriales interpretando mando, potencia y documentación.','Implementar sistemas automáticos programados y verificar programas de control.','Instalar y configurar sistemas de automatización en viviendas y edificios.','Diagnosticar averías, ajustar sistemas y realizar mantenimiento preventivo/predictivo.','Aplicar PRL, seguridad, compatibilidad electromagnética y gestión ambiental.'],units:[
-['01','Automatización industrial','Estructura de instalación industrial, niveles de automatización, tecnologías, protecciones, sensores, actuadores y motores.'],
-['02','Planificación y cuadros','Fases de montaje, recursos, temporización, organización de cuadros y especificaciones.'],
-['03','Automatismos cableados','Mando/potencia, referencias, protecciones, contactores, relés, temporizadores, cuadros, conexionado y pruebas.'],
-['04','PLC y GRAFCET','Secuencias, lógica, tipos de señales, E/S, módulos analógicos, esquemas, programación, carga y verificación.'],
-['05','Domótica e inmótica','Confort, seguridad, energía, comunicaciones, BUS, inalámbrico, corrientes portadoras y sistemas con autómatas.'],
-['06','Averías y mantenimiento','Diagnóstico, ajustes, registros, mantenimiento preventivo/predictivo, visualización y telecontrol.']],
-calc:['motor','power3','ohms','logic'],practice:['Diseñar la secuencia de una cinta transportadora y convertirla en E/S.','Resolver un marcha-paro con enclavamiento y final de carrera.','Diagnosticar un motor que no arranca siguiendo un árbol de comprobación.'],mistakes:['Programar sin definir primero estados, secuencia y lista de E/S.','Confundir circuito de mando con circuito de potencia.','No definir estados seguros ni condiciones de fallo.'],check:['Lista E/S','Secuencia/GRAFCET','Esquemas mando/potencia','Protecciones','Programa/simulación','Pruebas y diagnóstico']},
-{code:'0526',short:'Proyecto',name:'Proyecto de Sistemas Electrotécnicos y Automatizados',hours:'30 h · 5 h/sem*',ects:'5 ECTS',color:'project',desc:'Módulo interdisciplinar: análisis de necesidades, viabilidad, diseño, presupuesto, planificación, ejecución y control.',ras:['Identificar necesidades del sector y seleccionar un tipo de proyecto que las satisfaga.','Diseñar el proyecto incluyendo viabilidad técnica, objetivos, recursos, presupuesto y documentación.','Planificar la ejecución, logística, permisos, riesgos, recursos y tiempos.','Definir procedimientos de seguimiento, indicadores de calidad, incidencias y control de cambios.'],units:[
-['01','Definición','Necesidad, cliente/usuario, alcance, objetivos, requisitos, contexto y tipo de proyecto.'],
-['02','Viabilidad','Viabilidad técnica y económica, alternativas, recursos, riesgos y restricciones.'],
-['03','Diseño y documentación','Memoria, cálculos, planos, esquemas, pliego, presupuesto, anexos y trazabilidad.'],
-['04','Planificación','Fases, tareas, dependencias, recursos, logística, permisos, seguridad y cronograma.'],
-['05','Control','Indicadores, calidad, incidencias, cambios, aceptación, pruebas y cierre.']],
-calc:['budget','power3','drop1'],practice:['Crear el índice completo de un proyecto eléctrico automatizado.','Relacionar un cálculo con el plano, material y partida presupuestaria correspondiente.','Definir indicadores para controlar plazo, coste y calidad.'],mistakes:['Empezar por los planos sin fijar alcance.','No mantener coherencia entre cálculos, materiales y presupuesto.','No registrar cambios y versiones.'],check:['Necesidad y alcance','Viabilidad','Memoria','Cálculos','Planos','Presupuesto','Planificación','Control de calidad']},
-{code:'0528',short:'Empresa',name:'Empresa e iniciativa emprendedora',hours:'60 h · 3 h/sem',ects:'4 ECTS',color:'business',desc:'Iniciativa emprendedora, empresa y entorno, creación, viabilidad económica/financiera y gestión administrativa.',ras:['Reconocer capacidades asociadas a la iniciativa emprendedora y al sector SEA.','Analizar empresa, entorno, innovación y oportunidades.','Seleccionar forma jurídica y trámites de puesta en marcha.','Analizar viabilidad económica y financiera.','Gestionar documentación administrativa, contabilidad básica y obligaciones fiscales.'],units:[
-['01','Iniciativa emprendedora','Innovación, cultura emprendedora, creatividad, formación, autoempleo y plan de empresa.'],
-['02','Empresa y entorno','Funciones, empresa como sistema, entorno general/específico y relaciones con sociedad.'],
-['03','Crear una empresa','Tipos de empresa, fiscalidad, forma jurídica, trámites, ayudas y subvenciones.'],
-['04','Viabilidad','Costes, ingresos, financiación, viabilidad económica y financiera.'],
-['05','Función administrativa','Contabilidad básica, información contable, obligaciones fiscales y gestión administrativa.']],
-calc:['break','budget','vat'],practice:['Calcular punto muerto de una empresa de instalaciones.','Crear una estructura de costes fijos y variables.','Preparar un mini plan de empresa para una pyme SEA.'],mistakes:['Confundir margen con beneficio.','Olvidar costes fijos o gastos indirectos.','No declarar los supuestos usados en una previsión.'],check:['Cliente objetivo','Propuesta de valor','Costes','Precio','Punto muerto','Financiación','Riesgos']},
-{code:'0529',short:'FCT',name:'Formación en Centros de Trabajo',hours:'400 h · 22 ECTS',ects:'22 ECTS',color:'fct',desc:'Aplicación práctica en empresa: organización, hábitos profesionales, seguridad, documentación, esquemas, dimensionado y trabajo técnico.',ras:['Identificar la estructura y organización de la empresa y su actividad.','Aplicar hábitos éticos y laborales, PRL, calidad, orden y comunicación profesional.','Determinar características de instalaciones desde anteproyectos o condiciones dadas.','Planificar montajes distribuyendo etapas y recursos.','Realizar montaje, mantenimiento o verificación según procedimientos.','Participar en tareas de gestión y documentación técnica.'],units:[
-['01','Conocer la empresa','Organigrama, departamentos, clientes, proveedores, logística, producción y procedimientos.'],
-['02','Actitud profesional','Puntualidad, responsabilidad, orden, comunicación, documentación, PRL, calidad y medio ambiente.'],
-['03','Interpretar y diseñar','Normativa, esquemas, croquis, dimensionado, selección de equipos y planos.'],
-['04','Planificar','Etapas, unidades de obra, recursos humanos/materiales, herramientas y medios de medida.'],
-['05','Ejecutar y aprender','Montaje, mantenimiento, verificación, incidencias, evidencias y reflexión técnica.']],
-calc:['ohms','power3','maintenance'],practice:['Crear una ficha diaria de FCT con tarea, procedimiento, medida, incidencia y aprendizaje.','Describir una instalación observada mediante esquema y lista de materiales.','Explicar una avería real usando hipótesis, medidas y conclusión.'],mistakes:['Anotar solo lo que se hizo sin explicar por qué.','Confundir observación con suposición.','No registrar medidas, referencias de equipos o procedimientos.'],check:['Diario de aprendizaje','Tareas y competencias','Medidas/evidencias','Riesgos','Procedimientos','Conclusiones']}
-];
-const CALCS={
-ohms:{title:'Ley de Ohm',group:'Electricidad',formula:'V = I · R',fields:[['V','V'],['I','A'],['R','Ω']],solve(v){const[V,I,R]=v;if(V==null&&I!=null&&R!=null)return `V = ${f(I*R)} V`;if(I==null&&V!=null&&R!=null&&R!==0)return `I = ${f(V/R)} A`;if(R==null&&V!=null&&I!=null&&I!==0)return `R = ${f(V/I)} Ω`;return 'Introduce exactamente dos valores válidos.'},note:'Modelo básico para circuitos resistivos.'},
-power1:{title:'Potencia monofásica',group:'Electricidad',formula:'P = V · I · cos φ',fields:[['V','V',230],['I','A'],['cos φ','',0.9]],solve(v){const[V,I,c]=v;if([V,I,c].some(x=>x==null))return 'Completa V, I y cos φ.';return `P = ${f(V*I*c)} W · S = ${f(V*I)} VA · Q ≈ ${f(V*I*Math.sqrt(Math.max(0,1-c*c)))} var`},note:'Para una instalación real hay que aplicar el criterio del ejercicio y la reglamentación correspondiente.'},
-power3:{title:'Potencia trifásica',group:'Electricidad',formula:'P = √3 · Vlínea · I · cos φ',fields:[['V línea','V',400],['I','A'],['cos φ','',0.85]],solve(v){const[V,I,c]=v;if([V,I,c].some(x=>x==null))return 'Completa V línea, I y cos φ.';return `P = ${f(Math.sqrt(3)*V*I*c)} W · S = ${f(Math.sqrt(3)*V*I)} VA`},note:'En esta expresión se utiliza tensión de línea.'},
-drop1:{title:'Caída de tensión · modelo monofásico',group:'Electricidad',formula:'ΔV ≈ 2 · ρ · L · I / S',fields:[['ρ','Ω·mm²/m',0.0175],['L','m'],['I','A'],['S','mm²']],solve(v){const[rho,L,I,S]=v;if([rho,L,I,S].some(x=>x==null)||S===0)return 'Completa todos los campos.';const dv=2*rho*L*I/S;return `ΔV ≈ ${f(dv)} V · porcentaje a 230 V ≈ ${f(dv/230*100)} %`},note:'Modelo educativo simplificado. La comprobación reglamentaria depende del circuito y método de instalación.'},
-resistance:{title:'Resistencia de un conductor',group:'Electricidad',formula:'R = ρ · L / S',fields:[['ρ','Ω·mm²/m',0.0175],['L','m'],['S','mm²']],solve(v){const[rho,L,S]=v;if([rho,L,S].some(x=>x==null)||S===0)return 'Completa todos los campos.';return `R = ${f(rho*L/S,5)} Ω`},note:'Modelo de resistencia del conductor sin incluir otros efectos.'},
-transformer:{title:'Relación de transformación',group:'0522',formula:'m = U₁ / U₂ ≈ N₁ / N₂',fields:[['U₁','V'],['U₂','V']],solve(v){const[a,b]=v;if([a,b].some(x=>x==null)||b===0)return 'Completa U₁ y U₂.';return `m ≈ ${f(a/b,4)} · U₂ ≈ ${f(b)} V`},note:'Modelo ideal simplificado; un transformador real tiene pérdidas y características propias.'},
-motor:{title:'Motor trifásico · corriente aproximada',group:'0521',formula:'I ≈ P / (√3 · V · η · cos φ)',fields:[['P','W'],['V línea','V',400],['η','',0.9],['cos φ','',0.85]],solve(v){const[P,V,e,c]=v;if([P,V,e,c].some(x=>x==null)||V*e*c===0)return 'Completa todos los campos.';return `I ≈ ${f(P/(Math.sqrt(3)*V*e*c))} A`},note:'Estimación didáctica. Para selección real consulta placa, fabricante y normativa.'},
-db:{title:'ICT · balance de nivel',group:'0517',formula:'Nivel salida = entrada + ganancias − pérdidas',fields:[['Entrada','dBµV'],['Ganancia total','dB',0],['Pérdidas totales','dB',0]],solve(v){const[e,g,p]=v;if([e,g,p].some(x=>x==null))return 'Completa entrada, ganancias y pérdidas.';return `Nivel de salida = ${f(e+g-p)} dBµV`},note:'Documenta siempre el punto de entrada, salida y cada tramo o elemento.'},
-attenuation:{title:'ICT · pérdida por tramos',group:'0517',formula:'Pérdida total = Σ pérdidas',fields:[['Cable','dB'],['Conectores','dB',0],['Repartidores','dB',0],['Otros','dB',0]],solve(v){if(v.some(x=>x==null))return 'Completa todos los campos.';return `Pérdida total = ${f(v.reduce((a,b)=>a+b,0))} dB`},note:'Úsalo como balance educativo de pérdidas.'},
-dbm:{title:'dBm ↔ mW',group:'0517',formula:'P(mW)=10^(dBm/10)',fields:[['dBm','dBm']],solve(v){const[d]=v;if(d==null)return 'Introduce dBm.';const mw=10**(d/10);return `${f(d)} dBm ≈ ${f(mw,4)} mW`},note:'Conversión de potencia referida a 1 mW.'},
-logic:{title:'Lógica booleana básica',group:'0521',formula:'Q = (Marcha OR memoria) AND NOT Paro AND NOT Fin',fields:[['Marcha','0/1'],['Memoria','0/1'],['Paro','0/1'],['Fin de carrera','0/1']],solve(v){if(v.some(x=>x==null))return 'Completa 0/1 en todos los campos.';const q=!!v[0]||!!v[1];const out=q&&!v[2]&&!v[3];return `Q = ${out?1:0} · ${out?'Salida permitida':'Salida bloqueada'}`},note:'Modelo de lógica de mando; no representa por sí solo un circuito de seguridad.'},
-maintenance:{title:'Disponibilidad · MTBF / MTTR',group:'0602',formula:'A ≈ MTBF / (MTBF + MTTR)',fields:[['MTBF','h'],['MTTR','h']],solve(v){const[a,b]=v;if([a,b].some(x=>x==null)||a+b===0)return 'Completa MTBF y MTTR.';return `Disponibilidad ≈ ${f(a/(a+b)*100,2)} %`},note:'Indicador simplificado para estudiar fiabilidad y mantenibilidad.'},
-stock:{title:'Punto de pedido',group:'0602',formula:'PP = consumo medio × plazo + stock de seguridad',fields:[['Consumo/día','ud'],['Plazo','días'],['Stock seguridad','ud',0]],solve(v){const[a,b,c]=v;if([a,b,c].some(x=>x==null))return 'Completa todos los campos.';return `Punto de pedido = ${f(a*b+c,2)} unidades`},note:'Modelo básico de gestión de stock.'},
-budget:{title:'Presupuesto rápido',group:'Proyecto',formula:'Total = base × (1 + margen/100)',fields:[['Materiales','€'],['Mano de obra','€'],['Medios/otros','€'],['Margen','%',10]],solve(v){const[m,mo,med,mar]=v;if([m,mo,med,mar].some(x=>x==null))return 'Completa todos los campos.';const base=m+mo+med;return `Base = ${f(base)} € · Total = ${f(base*(1+mar/100))} €`},note:'Modelo educativo; separa siempre costes directos, indirectos, impuestos y criterio de margen según el ejercicio.'},
-break:{title:'Punto muerto',group:'0528',formula:'Q₀ = CF / (P − CVu)',fields:[['Costes fijos','€'],['Precio unidad','€'],['Coste variable unidad','€']],solve(v){const[cf,p,cv]=v;if([cf,p,cv].some(x=>x==null)||p<=cv)return 'Completa los datos y asegúrate de que precio > coste variable.';const q=cf/(p-cv);return `Punto muerto ≈ ${f(q,2)} unidades · Ventas ≈ ${f(q*p,2)} €`},note:'Indica siempre los supuestos y el periodo del análisis.'},
-vat:{title:'Precio con IVA (introduciendo el tipo)',group:'0528',formula:'Total = base × (1 + IVA/100)',fields:[['Base','€'],['IVA','%',21]],solve(v){const[b,t]=v;if([b,t].some(x=>x==null))return 'Completa base e IVA.';return `IVA = ${f(b*t/100)} € · Total = ${f(b*(1+t/100))} €`},note:'Introduce el tipo de IVA que corresponda al ejercicio; no presupone que 21 % sea aplicable a cualquier operación.'}
-};
-const calcNames=Object.fromEntries(Object.entries(CALCS).map(([k,v])=>[k,v.title]));
-const QUESTIONS=[
-['0522','¿Qué se debe comprobar además de la intensidad al seleccionar una sección?',['Solo el color del conductor','Caída de tensión y condiciones aplicables','Nada más'],1,'La selección real debe considerar varios criterios y la reglamentación.'],
-['0522','En P = √3·V·I·cosφ, V representa normalmente…',['Tensión de línea','Tensión de tierra','Siempre tensión de fase'],0,'La expresión usa tensión de línea.'],
-['0522','¿Qué relaciona la relación de transformación ideal?',['U₁/U₂ con N₁/N₂','I₁/I₂ con frecuencia','Potencia con longitud'],0,'En el modelo ideal m≈U₁/U₂≈N₁/N₂.'],
-['0602','¿Qué une el plan de aprovisionamiento con el montaje?',['Fases, materiales y condiciones de suministro','Solo el nombre del almacén','Solo el presupuesto'],0,'El aprovisionamiento debe responder a las fases del montaje.'],
-['0602','¿Cuál es un ejemplo de mantenimiento preventivo?',['Actuar solo tras una avería','Inspecciones programadas','Eliminar registros'],1,'El preventivo se planifica antes del fallo.'],
-['0517','Una pérdida de 5 dB en un tramo…',['Aumenta 5 dB','Reduce 5 dB el nivel','No afecta'],1,'La pérdida se resta en el balance.'],
-['0517','¿Qué conviene indicar en un balance ICT?',['Solo el resultado final','Puntos de entrada/salida y elementos','Solo la longitud'],1,'La trazabilidad del balance es fundamental.'],
-['0521','Antes de programar un PLC conviene definir…',['Secuencia y lista de E/S','Solo colores','Solo presupuesto'],0,'La lógica debe partir de la secuencia y las señales.'],
-['0521','¿Qué es una entrada de PLC?',['Señal que recibe el controlador','Salida de potencia','Un plano'],0,'Pulsadores y sensores pueden aportar entradas.'],
-['0521','¿Qué describe mejor GRAFCET?',['Secuencia funcional','Precio de un motor','Pérdidas ICT'],0,'Permite representar etapas y transiciones de una secuencia.'],
-['0526','¿Qué debe mantener coherencia en un proyecto?',['Memoria, cálculos, planos y presupuesto','Solo el índice','Solo las imágenes'],0,'La trazabilidad entre documentos es clave.'],
-['0526','¿Para qué sirven los indicadores del proyecto?',['Controlar y evaluar','Sustituir todos los cálculos','Evitar documentación'],0,'Permiten seguimiento y control.'],
-['0528','El punto muerto es…',['Nivel donde ingresos y costes se equilibran','IVA máximo','Potencia contratada'],0,'Es el punto sin beneficio ni pérdida en el modelo básico.'],
-['0528','Un coste variable unitario cambia principalmente con…',['La cantidad producida/vendida','El nombre de la empresa','El color del logo'],0,'Depende del volumen de actividad.'],
-['0529','Durante FCT es especialmente útil registrar…',['Tareas, procedimientos, medidas y aprendizajes','Solo entradas','Solo fotos'],0,'La documentación convierte la práctica en aprendizaje verificable.'],
-['0529','Ante una medición real conviene anotar…',['Instrumento, punto, valor y condiciones','Solo el número','Nada'],0,'La trazabilidad de la medida permite interpretarla.']
-];
-const FAULTS={
-'motor-no-arranca':{title:'Motor no arranca',steps:['Seguridad y ausencia de condiciones peligrosas.','Comprobar alimentación y protecciones.','Comprobar circuito de mando y paro.','Comprobar señal de salida al actuador/contactor.','Comprobar bobina, contactos y continuidad.','Comprobar motor y condiciones mecánicas.'],why:'Sigue del sistema general hacia el elemento concreto; evita sustituir componentes por intuición.'},
-'motor-se-para':{title:'Motor se para',steps:['Registrar cuándo y bajo qué carga ocurre.','Comprobar protecciones y sobrecarga.','Medir tensiones durante el fallo.','Revisar temperatura, ventilación y conexiones.','Comparar con parámetros de placa/fabricante.'],why:'Diferencia una causa eléctrica de una térmica, mecánica o de control.'},
-'plc-no-actua':{title:'PLC no activa una salida',steps:['Comprobar alimentación del PLC.','Comprobar estado de la entrada esperada.','Revisar la lógica y condiciones de transición.','Comprobar modo de operación y programa cargado.','Comprobar cableado/salida y actuador.'],why:'El diagnóstico debe separar entrada, lógica, salida y elemento final.'},
-'ict-nivel-bajo':{title:'Nivel ICT bajo',steps:['Definir punto exacto de medida.','Comprobar conectores y latiguillos.','Revisar pérdidas del tramo y repartidores.','Comprobar cabecera/amplificación.','Comparar con niveles previstos y documentación.'],why:'Un nivel bajo puede originarse en distintos tramos; mide antes de modificar la instalación.'},
-'proteccion-dispara':{title:'Protección dispara',steps:['No rearmar repetidamente sin diagnóstico.','Identificar qué protección actúa.','Separar sobrecarga, cortocircuito y fuga como hipótesis.','Inspeccionar circuito y cargas.','Medir según procedimiento seguro y documentar.'],why:'Una protección que actúa es una señal de problema, no simplemente un obstáculo.'}
-};
-const GLOSSARY=[
-['Aparente','S','Potencia asociada al producto de tensión e intensidad en AC; se expresa normalmente en VA.'],['Atenuación','—','Pérdida de nivel de una señal; en balances expresados en dB se resta.'],['BT','—','Baja tensión; el ámbito y límites concretos dependen de la reglamentación aplicable.'],['CT','—','Centro de transformación.'],['cos φ','—','Factor de potencia asociado a la relación entre potencia activa y aparente en el modelo AC.'],['GRAFCET','—','Representación de secuencias mediante etapas y transiciones.'],['ICT','—','Infraestructura común de telecomunicaciones.'],['MTBF','h','Tiempo medio entre fallos.'],['MTTR','h','Tiempo medio de reparación/restablecimiento.'],['PLC','—','Controlador lógico programable.'],['Puesta a tierra','—','Sistema destinado a conectar eléctricamente determinadas partes a tierra conforme al diseño y normativa.'],['REBT','—','Reglamento Electrotécnico para Baja Tensión.'],['Telecontrol','—','Supervisión o actuación remota sobre elementos de una red/sistema.'],['E/S','—','Entradas y salidas de un sistema de automatización.'],['Trazabilidad','—','Capacidad de relacionar datos, decisiones, documentos, materiales y resultados a lo largo de un proceso.']
-];
-function f(n,d=2){return Number(n).toLocaleString('es-ES',{maximumFractionDigits:d});}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-function getProgress(){return JSON.parse(localStorage.getItem('sea2-progress')||'{}');}
-function setProgress(p){localStorage.setItem('sea2-progress',JSON.stringify(p));}
-function updateProgress(){const p=getProgress(), mastered=Object.values(p).filter(Boolean).length, tasks=loadTasks(),done=tasks.filter(t=>t.done).length;let lessonDone=0,lessonTotal=0;try{const lp=JSON.parse(localStorage.getItem('sea2-lessons')||'{}');lessonTotal=typeof LESSONS!=='undefined'?LESSONS.length:0;lessonDone=Object.values(lp).filter(x=>x&&x.done).length;}catch{} const baseTotal=Math.max(1,Object.keys(p).length+tasks.length+lessonTotal);const pct=Math.min(100,Math.round((mastered+done+lessonDone)/baseTotal*100));$('#progressValue').textContent=pct+'%';$('#progressBar').style.width=pct+'%';$('#progressText').textContent=`${lessonDone}/${lessonTotal||0} lecciones dominadas · ${done} tareas completadas`;
- const counts=MODULES.map(m=>{const n=m.units.length, d=m.units.filter((u,i)=>p[m.code+'-'+i]).length;return {m,d,n};});
- $('#moduleProgressGrid').innerHTML=counts.map(x=>`<div class="mini-progress"><b>${x.m.code}</b><span>${x.d}/${x.n}</span><div class="progress-track"><i style="width:${Math.round(x.d/x.n*100)}%"></i></div></div>`).join('');
-}
-function renderModules(filter=''){
- const q=filter.toLowerCase().trim();const list=MODULES.filter(m=>(m.code+' '+m.name+' '+m.desc+' '+m.units.flat().join(' ')+' '+m.ras.join(' ')).toLowerCase().includes(q));
- $('#moduleGrid').innerHTML=list.length?list.map(m=>`<article class="module-card ${m.color}"><div class="module-top"><span class="code">${m.code}</span><span class="hours">${m.hours}</span></div><h3>${m.name}</h3><p>${m.desc}</p><div class="chips">${m.units.slice(0,4).map(u=>`<span>${u[1]}</span>`).join('')}</div><div class="module-bottom"><span>${m.ects}</span><button class="link-btn" data-open="${m.code}">Abrir módulo →</button></div></article>`).join(''):'<div class="notice" style="grid-column:1/-1">No hay coincidencias.</div>';
- $$('[data-open]').forEach(b=>b.onclick=()=>openModule(b.dataset.open));
-}
-function openModule(code){const m=MODULES.find(x=>x.code===code);if(!m)return;const p=getProgress();$('#dialogContent').innerHTML=`<div class="dialog-body"><div class="module-top"><span class="code">${m.code}</span><span>${m.hours} · ${m.ects}</span></div><h2>${m.name}</h2><p class="lead">${m.desc}</p><div class="source-pill">Currículo: ${CURRICULUM_SOURCE}</div><div class="detail-grid"><div><h3>Resultados de aprendizaje</h3><ol class="ra-list">${m.ras.map(x=>`<li>${x}</li>`).join('')}</ol></div><div><h3>Ruta de estudio</h3><ol class="steps"><li>Lee la unidad y aprende vocabulario.</li><li>Haz el ejemplo guiado o cálculo.</li><li>Practica un caso nuevo.</li><li>Comprueba errores y documenta el resultado.</li></ol><h3>Prácticas recomendadas</h3><ul>${m.practice.map(x=>`<li>▸ ${x}</li>`).join('')}</ul></div></div><h3>Temario organizado</h3><div class="unit-list">${m.units.map((u,i)=>`<article class="unit-card"><div><span class="unit-no">${u[0]}</span><div><b>${u[1]}</b><p>${u[2]}</p></div></div><label class="master"><input type="checkbox" data-master="${m.code}-${i}" ${p[m.code+'-'+i]?'checked':''}> Dominado</label></article>`).join('')}</div><div class="detail-grid"><div><h3>Herramientas</h3><div class="tool-links">${m.calc.map(c=>`<button class="btn small" data-caljump="${c}">${calcNames[c]}</button>`).join('')}</div></div><div><h3>Errores típicos</h3><ul>${m.mistakes.map(x=>`<li>⚠ ${x}</li>`).join('')}</ul></div></div><div class="detail-grid"><div><h3>Checklist</h3>${['Datos y unidades','Procedimiento','Resultado','Comprobación','Documentación'].map((x,i)=>`<label class="checkline"><input type="checkbox" data-check="${m.code}-check-${i}"> ${x}</label>`).join('')}</div><div><h3>Repaso</h3><button class="btn primary" data-add-study="${m.code}">Añadir repaso al planificador</button><button class="btn ghost" data-module-quiz="${m.code}">Practicar este módulo</button></div></div></div>`;$('#moduleDialog').showModal();
- $$('[data-caljump]').forEach(b=>b.onclick=()=>{closeModule();selectCalc(b.dataset.caljump);$('#calculadora').scrollIntoView({behavior:'smooth'});});
- $$('[data-master]').forEach(c=>c.onchange=()=>{const pp=getProgress();pp[c.dataset.master]=c.checked;setProgress(pp);updateProgress();});
- $$('[data-add-study]').forEach(b=>b.onclick=()=>{addTask('Repasar '+m.short,m.code);closeModule();$('#planificador').scrollIntoView({behavior:'smooth'});});
- $$('[data-module-quiz]').forEach(b=>b.onclick=()=>{closeModule();startQuiz(m.code);$('#practica').scrollIntoView({behavior:'smooth'});});
-}
-function closeModule(){if($('#moduleDialog').open)$('#moduleDialog').close();}
-function selectCalc(id){if(!CALCS[id])id='ohms';$$('.calc-tab').forEach(b=>b.classList.toggle('active',b.dataset.calc===id));const c=CALCS[id];$('#calcPanel').innerHTML=`<div class="calc-head"><div><span class="tool-icon">Σ</span><div><h3>${c.title}</h3><p>${c.formula}</p></div></div><span class="source-pill">${c.group}</span></div><div class="field-row">${c.fields.map((x,i)=>`<label>${x[0]} <small>${x[1]}</small><input inputmode="decimal" data-ci="${i}" value="${x[2]??''}" placeholder="—"></label>`).join('')}</div><button class="btn primary" id="solveBtn">Calcular</button><div id="calcResult" class="result">Introduce datos y pulsa calcular.</div><div class="calc-explain"><b>Cómo interpretarlo</b><p>${c.note}</p></div>`;$('#solveBtn').onclick=()=>{const vals=$$('#calcPanel input').map(i=>{const s=i.value.trim().replace(',','.');return s===''?null:Number(s)});$('#calcResult').textContent=c.solve(vals);$('#calcResult').className='result success';};}
-function initCalcTabs(){$$('.calc-tab').forEach(b=>b.onclick=()=>selectCalc(b.dataset.calc));selectCalc('ohms');}
-function loadTasks(){try{return JSON.parse(localStorage.getItem('sea2tasks')||'[]')}catch{return[]}}
-function saveTasks(x){localStorage.setItem('sea2tasks',JSON.stringify(x));}
-function addTask(name,module='General',date=''){const tasks=loadTasks();tasks.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name,module,date,done:false});saveTasks(tasks);renderTasks();}
-function renderTasks(){const tasks=loadTasks().sort((a,b)=>(a.done-b.done)||((a.date||'9999').localeCompare(b.date||'9999')));$('#taskList').innerHTML=tasks.length?tasks.map(t=>`<div class="task ${t.done?'done':''}"><input type="checkbox" data-task="${t.id}" ${t.done?'checked':''}><div><div class="task-name">${esc(t.name)}</div><div class="task-meta">${esc(t.module)}${t.date?' · '+esc(t.date):''}</div></div><button class="delete" data-del="${t.id}">×</button></div>`).join(''):'<div class="empty">No tienes tareas.</div>';$$('[data-task]').forEach(x=>x.onchange=()=>{const a=loadTasks(),t=a.find(z=>z.id===x.dataset.task);if(t)t.done=x.checked;saveTasks(a);renderTasks();});$$('[data-del]').forEach(x=>x.onclick=()=>{saveTasks(loadTasks().filter(t=>t.id!==x.dataset.del));renderTasks();});updateProgress();}
-function clearTasks(){if(confirm('¿Borrar todas las tareas?')){localStorage.removeItem('sea2tasks');renderTasks();}}
-function exportTasks(){downloadBlob(new Blob([JSON.stringify(loadTasks(),null,2)],{type:'application/json'}),'sea2-planificador.json');}
-function downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);}
-function startQuiz(module='MIX'){const pool=module==='MIX'?QUESTIONS:QUESTIONS.filter(q=>q[0]===module);const list=pool.length?pool:QUESTIONS;const q=list[Math.floor(Math.random()*list.length)];$('#quizModule').textContent=q[0];$('#quizQuestion').textContent=q[1];$('#quizFeedback').textContent='Elige una respuesta.';$('#quizFeedback').className='result';$('#quizOptions').innerHTML=q[2].map((o,i)=>`<button data-answer="${i}">${String.fromCharCode(65+i)}) ${o}</button>`).join('');$$('[data-answer]').forEach(b=>b.onclick=()=>{const ok=Number(b.dataset.answer)===q[3];$('#quizFeedback').textContent=(ok?'✓ Correcto. ':'✗ No es esa. ')+q[4];$('#quizFeedback').className='result '+(ok?'success':'error');});}
-function initSimulator(){const state={start:false,stop:false,limit:false,memory:false};function draw(){const labels={start:'I0.0 · MARCHA',stop:'I0.1 · PARO',limit:'I0.2 · FINAL CARRERA',memory:'M0.0 · MEMORIA'};$('#simInputs').innerHTML=Object.keys(labels).map(k=>`<button class="sim-toggle ${state[k]?'on':''}" data-sim="${k}">${labels[k]}<b>${state[k]?1:0}</b></button>`).join('');const q=(state.start||state.memory)&&!state.stop&&!state.limit;$('#simMotor').className='sim-lamp '+(q?'on':'');$('#simMotor').textContent=q?'Q0.0 · MOTOR ON':'Q0.0 · MOTOR OFF';$('#simDiagnosis').innerHTML=q?'<b>Estado:</b> salida activa.':'<b>Diagnóstico:</b> '+(state.stop?'PARO activo.':state.limit?'Final de carrera activo.':'Activa MARCHA o MEMORIA.');$$('[data-sim]').forEach(b=>b.onclick=()=>{state[b.dataset.sim]=!state[b.dataset.sim];draw();});}draw();}
-function renderFault(){const s=$('#faultSelect');s.innerHTML=Object.entries(FAULTS).map(([k,v])=>`<option value="${k}">${v.title}</option>`).join('');function go(){const x=FAULTS[s.value];$('#faultSteps').innerHTML=x.steps.map((z,i)=>`<li><b>${i+1}.</b> ${z}</li>`).join('');$('#faultWhy').textContent=x.why;}s.onchange=go;go();}
-function renderGlossary(filter=''){const q=filter.toLowerCase();const list=GLOSSARY.filter(x=>x.join(' ').toLowerCase().includes(q));$('#glossaryTable').innerHTML=list.map(x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td></tr>`).join('');}
-function renderStudy(){const items=MODULES.flatMap(m=>m.units.map((u,i)=>({m,u,i})));let idx=Number(localStorage.getItem('sea2card')||0)%items.length;function draw(){const x=items[idx];$('#cardModule').textContent=x.m.code;$('#flashcardTitle').textContent=x.u[1];$('#flashcardText').textContent=x.u[2];$('#flashcardBack').textContent=`Piensa en: ${x.m.practice[idx%x.m.practice.length]}`;$('#flashcard').classList.remove('flipped');}$('#nextCard').onclick=()=>{idx=(idx+1)%items.length;localStorage.setItem('sea2card',idx);draw();};$('#prevCard').onclick=()=>{idx=(idx-1+items.length)%items.length;localStorage.setItem('sea2card',idx);draw();};$('#flashcard').onclick=()=>$('#flashcard').classList.toggle('flipped');draw();}
-function renderProject(){const fields=['projectTitle','client','location','power','scope','equipment','notes'];fields.forEach(id=>{$('#'+id).value=localStorage.getItem('proj:'+id)||'';$('#'+id).oninput=()=>{$('#projectPreview').innerHTML=previewProject();localStorage.setItem('proj:'+id,$('#'+id).value);}});$('#projectPreview').innerHTML=previewProject();}
-function previewProject(){const v=id=>esc($('#'+id)?.value||'Pendiente');return `<h3>${v('projectTitle')}</h3><p><b>Cliente:</b> ${v('client')} · <b>Emplazamiento:</b> ${v('location')}</p><h4>1. Objeto y alcance</h4><p>${v('scope')}</p><h4>2. Datos técnicos</h4><p>Potencia prevista: ${v('power')}</p><h4>3. Equipos y materiales</h4><p>${v('equipment')}</p><h4>4. Planificación y control</h4><p>Define fases, recursos, riesgos, indicadores y criterios de aceptación.</p><h4>5. Observaciones</h4><p>${v('notes')}</p><p class="muted">Plantilla educativa: completa la documentación conforme al enunciado, normativa y criterios docentes.</p>`;}
-function printProject(){const w=window.open('','_blank');w.document.write(`<html><head><title>SEA2 · Proyecto</title><style>body{font-family:Arial;max-width:850px;margin:40px auto;line-height:1.55}h1{font-size:26px}</style></head><body><h1>Proyecto SEA2</h1>${previewProject()}</body></html>`);w.document.close();w.print();}
-function initTheme(){const saved=localStorage.getItem('sea2theme');if(saved==='dark')document.body.classList.add('dark');$('#themeBtn').onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('sea2theme',document.body.classList.contains('dark')?'dark':'light');};}
+/**
+ * Application Core - SEA2 Campus
+ */
 
-/* ===================== MODO PROFESOR LOCAL ===================== */
-function teacherHistory(){try{return JSON.parse(localStorage.getItem('sea2-teacher-history')||'[]')}catch{return[]}}
-function saveTeacherHistory(h){localStorage.setItem('sea2-teacher-history',JSON.stringify(h.slice(-100)))}
-function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
-function teacherPool(module,difficulty){
- let all=[];
- const lessons=module==='ALL'?LESSONS:LESSONS.filter(l=>l.code===module);
- lessons.forEach((l,li)=>l.exercises.forEach((e,ei)=>all.push({...e,lessonId:l.id,lessonTitle:l.title,unitNo:l.unitNo,diff:(ei<4?'EASY':ei<8?'MEDIUM':'EXAM')})));
- if(difficulty!=='MIX') all=all.filter(x=>x.diff===difficulty);
- return shuffle(all);
-}
-let teacherSession=null,teacherIndex=0,teacherStartedAt=0,teacherTimer=null;
-function initTeacher(){
- $('#startTeacher').onclick=()=>startTeacherSession();
- $('#teacherPrev').onclick=()=>{if(!teacherSession)return;teacherIndex=Math.max(0,teacherIndex-1);renderTeacherQuestion()};
- $('#teacherNext').onclick=()=>{if(!teacherSession)return;teacherIndex=Math.min(teacherSession.length-1,teacherIndex+1);renderTeacherQuestion()};
- $('#teacherFinish').onclick=()=>finishTeacherSession();
- $('#clearHistory').onclick=()=>{if(confirm('¿Borrar todo el historial de sesiones guardado en este dispositivo?')){localStorage.removeItem('sea2-teacher-history');renderTeacherHistory();}};
- renderTeacherHistory();
-}
-function startTeacherSession(){
- const module=$('#teacherModule').value,diff=$('#teacherDifficulty').value,count=Number($('#teacherCount').value)||15;
- let pool=teacherPool(module,diff);
- if(!pool.length){$('#teacherResult').textContent='No hay preguntas para esta selección.';return;}
- teacherSession=shuffle(pool).slice(0,count).map((q,i)=>({...q,sessionAnswer:null,sessionCorrect:false,number:i+1}));
- teacherIndex=0;teacherStartedAt=Date.now();clearInterval(teacherTimer);teacherTimer=setInterval(()=>{const sec=Math.floor((Date.now()-teacherStartedAt)/1000);$('#teacherTimer').textContent=`${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`},1000);
- $('#teacherTitle').textContent=`${module==='ALL'?'Todos los módulos':module} · ${diff==='MIX'?'Dificultad mixta':diff==='EASY'?'Fácil':diff==='MEDIUM'?'Medio':'Examen'} · ${teacherSession.length} preguntas`;
- $('#teacherResult').textContent='Responde todas las preguntas y finaliza para obtener la nota.';$('#teacherResult').className='result';renderTeacherQuestion();
-}
-function renderTeacherQuestion(){
- const q=teacherSession?.[teacherIndex];if(!q)return;
- $('#teacherProgressText').textContent=`${teacherIndex+1}/${teacherSession.length}`;$('#teacherProgressBar').style.width=((teacherIndex+1)/teacherSession.length*100)+'%';
- const chosen=q.sessionAnswer;
- $('#teacherQuestion').innerHTML=`<div class="teacher-question"><span class="tag">${q.code} · UD ${q.unitNo} · ${q.diff==='EASY'?'FÁCIL':q.diff==='MEDIUM'?'MEDIO':'EXAMEN'}</span><h3>${esc(q.question)}</h3><div class="teacher-options">${q.type==='mc'?q.options.map((o,j)=>`<label class="teacher-option"><input type="radio" name="teacherAnswer" value="${j}" ${String(chosen)===String(j)?'checked':''}> ${String.fromCharCode(65+j)}) ${esc(o)}</label>`).join(''):`<input class="wide-input" id="teacherNumeric" inputmode="decimal" placeholder="Escribe tu resultado" value="${chosen??''}"><small class="muted">Se acepta una pequeña tolerancia numérica.</small>`}</div><p class="muted">Unidad: ${esc(q.lessonTitle)}</p></div>`;
- $$('#teacherQuestion input').forEach(el=>el.onchange=()=>saveTeacherAnswer());
-}
-function saveTeacherAnswer(){const q=teacherSession?.[teacherIndex];if(!q)return;if(q.type==='mc'){const r=document.querySelector('input[name="teacherAnswer"]:checked');q.sessionAnswer=r?Number(r.value):null}else{const raw=$('#teacherNumeric')?.value.trim().replace(',','.');q.sessionAnswer=raw===''?null:Number(raw)} }
-function finishTeacherSession(){
- if(!teacherSession)return;saveTeacherAnswer();const unanswered=teacherSession.filter(q=>q.sessionAnswer===null||q.sessionAnswer===undefined||Number.isNaN(q.sessionAnswer)).length;
- if(unanswered&& !confirm(`Hay ${unanswered} preguntas sin responder. ¿Quieres corregir igualmente?`))return;
- let correct=0;teacherSession.forEach(q=>{q.sessionCorrect=q.type==='mc'?Number(q.sessionAnswer)===Number(q.answer):typeof q.sessionAnswer==='number'&&Number.isFinite(q.sessionAnswer)&&Math.abs(q.sessionAnswer-q.answer)<=q.tolerance;if(q.sessionCorrect)correct++});
- const score=Math.round(correct/teacherSession.length*100),sec=Math.floor((Date.now()-teacherStartedAt)/1000),module=$('#teacherModule').value;
- clearInterval(teacherTimer);const h=teacherHistory();h.push({id:Date.now(),date:new Date().toLocaleString('es-ES'),module,difficulty:$('#teacherDifficulty').value,count:teacherSession.length,correct,score,seconds:sec});saveTeacherHistory(h);renderTeacherHistory();
- $('#teacherResult').innerHTML=`<b>Resultado: ${score}%</b> · ${correct}/${teacherSession.length} correctas · ${Math.floor(sec/60)} min ${sec%60}s. ${score>=80?'Sesión superada.':'Conviene repasar y repetir la sesión.'}`;$('#teacherResult').className='result '+(score>=80?'success':'error');
- $('#teacherQuestion').innerHTML=teacherSession.map((q,i)=>`<article class="exercise"><span class="exercise-no">${i+1}</span><h4>${esc(q.question)}</h4><p class="${q.sessionCorrect?'ok':'bad'}">${q.sessionCorrect?'✓ Correcta':'✗ Incorrecta'} · ${q.feedback}</p></article>`).join('');
- teacherSession=null;
-}
-function renderTeacherHistory(){
- const h=teacherHistory();const by={};h.forEach(x=>{const k=x.module==='ALL'?'Todos':x.module;(by[k]??=[]).push(x)});
- const rows=Object.entries(by).map(([m,a])=>{const avg=Math.round(a.reduce((s,x)=>s+x.score,0)/a.length),best=Math.max(...a.map(x=>x.score));return `<div class="history-row"><div><b>${esc(m)}</b><small>${a.length} sesiones · media ${avg}%</small></div><strong>${best}%</strong></div>`}).join('');
- $('#teacherHistory').innerHTML=rows||'<p class="muted">Todavía no hay sesiones guardadas.</p>';
- const all=h.map(x=>x.score),best=all.length?Math.max(...all):null,avg=all.length?Math.round(all.reduce((a,b)=>a+b,0)/all.length):null;
- $('#teacherBest').textContent=best===null?'—':best+'%';$('#teacherAvg').textContent=avg===null?'—':avg+'%';$('#teacherSessions').textContent=h.length;
- const mastery=MODULES.map(m=>{const a=h.filter(x=>x.module===m.code);return a.length?a.reduce((s,x)=>s+x.score,0)/a.length:null}).filter(x=>x!==null);$('#teacherMastery').textContent=mastery.length?Math.round(mastery.reduce((a,b)=>a+b,0)/mastery.length)+'%':'0%';
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar estado de progreso de manera segura
+    let userProgress = getStoredProgress();
+    let currentActiveFilter = 'all';
+    let activeLessonId = null;
 
-// MODO EXAMEN REAL
-let realExam=null,realExamIndex=0,realExamEnd=0,realExamTimer=null;
-const EXAM_WEIGHTS={theory:.20,problem:.35,case:.25,plc:.10,diagnosis:.10};
-function classifyExamQuestion(q){const t=(q.question+' '+(q.lessonTitle||'')).toLowerCase();if(/plc|grafcet|ladder|entrada|salida|etapa|transici/.test(t))return'plc';if(/diagnóstico|avería|fallo|discrepancia|incidencia|mantenimiento/.test(t))return'diagnosis';if(q.type==='num'||/calcula|intensidad|potencia|relación|punto muerto|mtbf|mttr|dbµv|dbm|margen/.test(t))return'problem';if(/caso|instalación|proyecto|empresa|fct|planificación|procedimiento|medida/.test(t))return'case';return'theory'}
-function realExamPool(module){const ls=module==='ALL'?LESSONS:LESSONS.filter(l=>l.code===module),p=[];ls.forEach(l=>l.exercises.forEach(e=>p.push({...e,lessonId:l.id,lessonTitle:l.title,unitNo:l.unitNo,category:classifyExamQuestion({...e,lessonTitle:l.title})})));return p}
-function weightedSample(pool,count){const b={theory:[],problem:[],case:[],plc:[],diagnosis:[]};pool.forEach(q=>(b[q.category]||b.theory).push(q));const d={theory:Math.round(count*.20),problem:Math.round(count*.35),case:Math.round(count*.25),plc:Math.round(count*.10),diagnosis:Math.round(count*.10)};d.problem+=count-Object.values(d).reduce((a,x)=>a+x,0);let out=[];Object.keys(d).forEach(k=>out.push(...shuffle(b[k]).slice(0,d[k])));if(out.length<count)out.push(...shuffle(pool.filter(q=>!out.includes(q))).slice(0,count-out.length));return shuffle(out).slice(0,count)}
-function initRealExam(){$('#startRealExam').onclick=startRealExam;$('#realExamPrev').onclick=()=>{if(realExam){saveRealAnswer();realExamIndex=Math.max(0,realExamIndex-1);renderRealExam()}};$('#realExamNext').onclick=()=>{if(realExam){saveRealAnswer();realExamIndex=Math.min(realExam.length-1,realExamIndex+1);renderRealExam()}};$('#realExamFinish').onclick=()=>finishRealExam(false);renderLastExamAnalysis()}
-function startRealExam(){const module=$('#realExamModule').value,count=Number($('#realExamCount').value),minutes=Number($('#realExamDuration').value),penalty=Number($('#realExamPenalty').value),pool=realExamPool(module);if(!pool.length)return;realExam=weightedSample(pool,count).map((q,i)=>({...q,answerGiven:null,correct:false,number:i+1}));realExamIndex=0;realExamEnd=Date.now()+minutes*60000;clearInterval(realExamTimer);realExamTimer=setInterval(updateRealTimer,250);$('#realExamTitle').textContent=`${module} · SIMULACRO REAL`;$('#realExamQuestionTitle').textContent='Examen en curso';$('#realExamStatus').textContent=`${count} preguntas · ${minutes} min · penalización −${penalty.toString().replace('.',',')} por fallo`;renderRealExam();updateRealTimer()}
-function updateRealTimer(){if(!realExam)return;const left=Math.max(0,realExamEnd-Date.now()),sec=Math.ceil(left/1000),m=Math.floor(sec/60),s=sec%60;$('#realExamTimer').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;$('#realExamTimer').classList.toggle('warning',sec<=300);if(left<=0)finishRealExam(true)}
-function renderRealExam(){const q=realExam?.[realExamIndex];if(!q)return;$('#realExamProgressText').textContent=`${realExamIndex+1}/${realExam.length}`;$('#realExamProgressBar').style.width=((realExamIndex+1)/realExam.length*100)+'%';$('#realExamQuestion').innerHTML=`<div class="real-exam-question"><span class="tag">${q.code} · UD ${q.unitNo} · ${q.category.toUpperCase()}</span><h3>${esc(q.question)}</h3>${q.type==='mc'?q.options.map((o,j)=>`<label class="real-exam-option"><input type="radio" name="realExamAnswer" value="${j}" ${String(q.answerGiven)===String(j)?'checked':''}> ${String.fromCharCode(65+j)}) ${esc(o)}</label>`).join(''):`<input class="wide-input" id="realExamNumeric" inputmode="decimal" placeholder="Escribe el resultado" value="${q.answerGiven??''}"><small class="muted">Tolerancia numérica: ${q.tolerance}</small>`}<p class="muted">Unidad: ${esc(q.lessonTitle)}</p></div>`;$$('#realExamQuestion input').forEach(x=>x.onchange=saveRealAnswer)}
-function saveRealAnswer(){const q=realExam?.[realExamIndex];if(!q)return;if(q.type==='mc'){const r=document.querySelector('input[name="realExamAnswer"]:checked');q.answerGiven=r?Number(r.value):null}else{const raw=$('#realExamNumeric')?.value.trim().replace(',','.');q.answerGiven=raw===''?null:Number(raw)}}
-function finishRealExam(auto){if(!realExam)return;saveRealAnswer();if(!auto&&!confirm('¿Entregar y corregir el examen?'))return;const penalty=Number($('#realExamPenalty').value),duration=Number($('#realExamDuration').value),unanswered=realExam.filter(q=>q.answerGiven===null||q.answerGiven===undefined||Number.isNaN(q.answerGiven)).length;let earned=0,possible=0;const cats={};realExam.forEach(q=>{const good=q.type==='mc'?Number(q.answerGiven)===Number(q.answer):typeof q.answerGiven==='number'&&Number.isFinite(q.answerGiven)&&Math.abs(q.answerGiven-q.answer)<=q.tolerance;q.correct=good;const w=EXAM_WEIGHTS[q.category]||EXAM_WEIGHTS.theory;possible+=w;if(good)earned+=w;else if(q.answerGiven!==null&&q.answerGiven!==undefined&&!Number.isNaN(q.answerGiven))earned-=penalty/realExam.length;const k=q.unitNo;cats[k]??={title:q.lessonTitle,total:0,ok:0};cats[k].total++;if(good)cats[k].ok++});const score=Math.max(0,Math.min(100,earned/possible*100)),sec=Math.min(duration*60,Math.max(0,Math.round((duration*60)-(Math.max(0,realExamEnd-Date.now())/1000))));const r={date:new Date().toLocaleString('es-ES'),module:$('#realExamModule').value,count:realExam.length,score:Math.round(score),seconds:sec,penalty,units:Object.fromEntries(Object.entries(cats).map(([u,x])=>[u,{title:x.title,score:Math.round(x.ok/x.total*100),ok:x.ok,total:x.total}]))};const h=JSON.parse(localStorage.getItem('sea2-real-exams')||'[]');h.push(r);localStorage.setItem('sea2-real-exams',JSON.stringify(h.slice(-100)));clearInterval(realExamTimer);renderRealExamResult(r,unanswered,auto);realExam=null}
-function renderRealExamResult(r,unanswered,auto){const units=Object.entries(r.units).sort((a,b)=>a[1].score-b[1].score),weak=units.filter(x=>x[1].score<80).slice(0,2),advice=weak.length?`Recomendación: repasa ${weak.map(x=>x[0]+' · '+x[1].title).join(' y ')} antes de repetir.`:'Buen dominio. Sube dificultad o añade penalización para consolidar.';$('#realExamQuestionTitle').textContent=`Resultado · ${(r.score/10).toFixed(1).replace('.',',')}/10`;$('#realExamTimer').textContent=auto?'TIEMPO':'ENTREGADO';$('#realExamStatus').innerHTML=`<b>${r.module} · ${r.score}%</b> · ${r.count-unanswered} respondidas · ${unanswered} sin responder. ${advice}`;$('#realExamStatus').className='result '+(r.score>=80?'success':'error');$('#realExamAnalysis').innerHTML=`<p><b>Desglose por unidades</b></p>${units.map(([u,x])=>`<div class="analysis-module"><b>${esc(u)} · ${esc(x.title)}</b><strong>${x.score}%</strong><div class="analysis-bar"><i style="width:${x.score}%"></i></div></div>`).join('')}<p class="muted">Tiempo: ${Math.floor(r.seconds/60)} min ${r.seconds%60}s · penalización −${r.penalty.toString().replace('.',',')}.</p>`;$('#realExamQuestion').innerHTML='<div class="exam-review"><b>Examen corregido.</b><p>Genera otro simulacro para seguir practicando.</p></div>';$('#realExamProgressText').textContent='FIN';$('#realExamProgressBar').style.width='100%'}
-function renderLastExamAnalysis(){const h=JSON.parse(localStorage.getItem('sea2-real-exams')||'[]');if(!h.length)return;const r=h[h.length-1],units=Object.entries(r.units).sort((a,b)=>a[1].score-b[1].score);$('#realExamAnalysis').innerHTML=`<p><b>Último: ${esc(r.module)} · ${r.score}%</b></p>${units.map(([u,x])=>`<div class="analysis-module"><b>${esc(u)} · ${esc(x.title)}</b><strong>${x.score}%</strong><div class="analysis-bar"><i style="width:${x.score}%"></i></div></div>`).join('')}<p class="muted">${esc(r.date)}</p>`}
+    // Elementos del DOM
+    const grid = document.getElementById('lessons-grid');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const modal = document.getElementById('lesson-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const markCompleteBtn = document.getElementById('mark-complete-btn');
 
-function init(){
- $('#moduleSearch').oninput=e=>renderModules(e.target.value);renderModules();initCalcTabs();
- $('#newQuiz').onclick=()=>startQuiz($('#quizFilter').value);$('#quizFilter').onchange=()=>startQuiz($('#quizFilter').value);startQuiz();
- $('#taskForm').onsubmit=e=>{e.preventDefault();addTask($('#taskInput').value,$('#taskModule').value,$('#taskDate').value);e.target.reset();};MODULES.forEach(m=>$('#taskModule').insertAdjacentHTML('beforeend',`<option value="${m.code}">${m.code} · ${m.short}</option>`));renderTasks();initTeacher();initRealExam();$('#exportTasks').onclick=exportTasks;$('#clearTasks').onclick=clearTasks;$('#resetProgress').onclick=()=>{if(confirm('¿Reiniciar progreso y tareas?')){localStorage.removeItem('sea2-progress');localStorage.removeItem('sea2tasks');renderTasks();updateProgress();}};
- initSimulator();renderFault();renderGlossary();$('#glossarySearch').oninput=e=>renderGlossary(e.target.value);renderStudy();renderProject();$('#printProject').onclick=printProject;$('#themeBtn').onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('sea2theme',document.body.classList.contains('dark')?'dark':'light');};initTheme();updateProgress();
- $('#moduleDialog').addEventListener('click',e=>{if(e.target.id==='moduleDialog')closeModule();});
- if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
-document.addEventListener('DOMContentLoaded',init);
+    // Inicialización del tema
+    const savedTheme = localStorage.getItem('sea2_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeToggleBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    // Cargar lecciones
+    renderLessons();
+    updateProgressUI();
+
+    // Event Listener: Alternar Tema
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('sea2_theme', newTheme);
+        themeToggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Event Listener: Filtros de Lecciones
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            currentActiveFilter = e.target.getAttribute('data-filter');
+            renderLessons();
+        });
+    });
+
+    // Event Listener: Cerrar Modal
+    document.addEventListener('click', (e) => {
+        if (e.target.dataset.close) {
+            closeModal();
+        }
+    });
+
+    // Event Listener: Marcar Lección como Completada
+    markCompleteBtn.addEventListener('click', () => {
+        if (activeLessonId) {
+            userProgress[activeLessonId] = true;
+            saveProgress(userProgress);
+            updateProgressUI();
+            renderLessons();
+            closeModal();
+        }
+    });
+
+    /**
+     * Renderiza las tarjetas de lecciones en la retícula según los datos de lessons.js
+     */
+    function renderLessons() {
+        if (typeof lessons === 'undefined' || !Array.isArray(lessons)) {
+            grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No se encontraron lecciones disponibles.</p>';
+            return;
+        }
+
+        grid.innerHTML = '';
+
+        const filtered = lessons.filter(lesson => {
+            const isCompleted = !!userProgress[lesson.id];
+            if (currentActiveFilter === 'completed') return isCompleted;
+            if (currentActiveFilter === 'pending') return !isCompleted;
+            return true;
+        });
+
+        if (filtered.length === 0) {
+            grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No hay lecciones en esta categoría.</p>';
+            return;
+        }
+
+        filtered.forEach(lesson => {
+            const isCompleted = !!userProgress[lesson.id];
+            const card = document.createElement('article');
+            card.className = 'card';
+            card.innerHTML = `
+                <div>
+                    <h3 class="card-title">${escapeHTML(lesson.title)}</h3>
+                    <p class="card-desc">${escapeHTML(lesson.description || '')}</p>
+                </div>
+                <div class="card-footer">
+                    <span class="badge ${isCompleted ? 'badge-completed' : 'badge-pending'}">
+                        ${isCompleted ? 'Completada' : 'Pendiente'}
+                    </span>
+                    <button class="btn btn-primary open-lesson-btn" data-id="${lesson.id}">Ver Lección</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Registrar eventos en los botones creados
+        document.querySelectorAll('.open-lesson-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.getAttribute('data-id');
+                openLessonModal(id);
+            });
+        });
+    }
+
+    /**
+     * Abre el modal de detalle para una lección específica
+     */
+    function openLessonModal(id) {
+        const lesson = lessons.find(l => l.id == id);
+        if (!lesson) return;
+
+        activeLessonId = lesson.id;
+        modalTitle.textContent = lesson.title;
+        modalBody.innerHTML = lesson.content || '<p>Contenido no disponible.</p>';
+
+        const isCompleted = !!userProgress[lesson.id];
+        markCompleteBtn.textContent = isCompleted ? 'Completada' : 'Marcar como Completada';
+        markCompleteBtn.style.opacity = isCompleted ? '0.7' : '1';
+
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        activeLessonId = null;
+    }
+
+    /**
+     * Actualiza la barra e indicador de progreso general
+     */
+    function updateProgressUI() {
+        if (typeof lessons === 'undefined' || lessons.length === 0) return;
+
+        const total = lessons.length;
+        const completedCount = Object.keys(userProgress).filter(id => userProgress[id]).length;
+        const percentage = Math.round((completedCount / total) * 100);
+
+        progressBar.style.width = `${percentage}%`;
+        progressText.textContent = `${percentage}% completado (${completedCount}/${total})`;
+    }
+
+    /**
+     * Recupera el progreso guardado en localStorage de forma segura
+     */
+    function getStoredProgress() {
+        try {
+            const data = localStorage.getItem('sea2_progress');
+            return data ? JSON.parse(data) : {};
+        } catch (e) {
+            console.error('Error al leer el progreso de localStorage', e);
+            return {};
+        }
+    }
+
+    /**
+     * Guarda el progreso en localStorage de forma segura
+     */
+    function saveProgress(progressObj) {
+        try {
+            localStorage.setItem('sea2_progress', JSON.stringify(progressObj));
+        } catch (e) {
+            console.error('Error al guardar el progreso en localStorage', e);
+        }
+    }
+
+    function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g, 
+            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+        );
+    }
+});
