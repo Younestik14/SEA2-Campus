@@ -5,11 +5,315 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1e293b">
     <title>SEA2 Campus - Plataforma de Aprendizaje</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --success: #10b981;
+        }
+
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-hover: #60a5fa;
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .main-layout {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .dashboard-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .dashboard-card h2 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 12px;
+            background-color: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 999px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-status {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            min-width: 110px;
+            text-align: right;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-icon {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .badge-pending {
+            background-color: var(--border);
+            color: var(--text-muted);
+        }
+
+        .badge-completed {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .modal.hidden {
+            display: none !important;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-card {
+            position: relative;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 650px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .modal-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+
     <header class="navbar">
         <div class="nav-container">
             <div class="brand">
@@ -42,7 +346,7 @@
             </div>
 
             <div id="lessons-grid" class="lessons-grid">
-                <!-- Las lecciones se renderizan dinámicamente desde lessons.js -->
+                <!-- Las lecciones se renderizan dinámicamente -->
             </div>
         </section>
     </main>
@@ -64,9 +368,164 @@
         </div>
     </div>
 
-    <!-- Carga ordenada e independiente de scripts -->
+    <!-- Cargar lecciones del repositorio -->
     <script src="lessons.js"></script>
-    <script src="enhancements.js"></script>
-    <script src="app.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let userProgress = getStoredProgress();
+            let currentActiveFilter = 'all';
+            let activeLessonId = null;
+
+            const grid = document.getElementById('lessons-grid');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const modal = document.getElementById('lesson-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const markCompleteBtn = document.getElementById('mark-complete-btn');
+
+            const savedTheme = localStorage.getItem('sea2_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggleBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+            renderLessons();
+            updateProgressUI();
+
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('sea2_theme', newTheme);
+                themeToggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            });
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentActiveFilter = e.target.getAttribute('data-filter');
+                    renderLessons();
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (e.target.dataset.close) {
+                    closeModal();
+                }
+            });
+
+            markCompleteBtn.addEventListener('click', () => {
+                if (activeLessonId) {
+                    userProgress[activeLessonId] = true;
+                    saveProgress(userProgress);
+                    updateProgressUI();
+                    renderLessons();
+                    closeModal();
+                }
+            });
+
+            function renderLessons() {
+                grid.innerHTML = '';
+                const lessonList = (typeof lessons !== 'undefined' && Array.isArray(lessons)) ? lessons : [];
+
+                const filtered = lessonList.filter(lesson => {
+                    const isCompleted = !!userProgress[lesson.id];
+                    if (currentActiveFilter === 'completed') return isCompleted;
+                    if (currentActiveFilter === 'pending') return !isCompleted;
+                    return true;
+                });
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No hay lecciones disponibles.</p>';
+                    return;
+                }
+
+                filtered.forEach(lesson => {
+                    const isCompleted = !!userProgress[lesson.id];
+                    const card = document.createElement('article');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div>
+                            <h3 class="card-title">${escapeHTML(lesson.title)}</h3>
+                            <p class="card-desc">${escapeHTML(lesson.description || '')}</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="badge ${isCompleted ? 'badge-completed' : 'badge-pending'}">
+                                ${isCompleted ? 'Completada' : 'Pendiente'}
+                            </span>
+                            <button class="btn btn-primary open-lesson-btn" data-id="${lesson.id}">Ver Lección</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                document.querySelectorAll('.open-lesson-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        openLessonModal(id);
+                    });
+                });
+            }
+
+            function openLessonModal(id) {
+                const lessonList = (typeof lessons !== 'undefined' && Array.isArray(lessons)) ? lessons : [];
+                const lesson = lessonList.find(l => l.id == id);
+                if (!lesson) return;
+
+                activeLessonId = lesson.id;
+                modalTitle.textContent = lesson.title;
+                modalBody.innerHTML = lesson.content || '<p>Contenido no disponible.</p>';
+
+                const isCompleted = !!userProgress[lesson.id];
+                markCompleteBtn.textContent = isCompleted ? 'Completada' : 'Marcar como Completada';
+                markCompleteBtn.style.opacity = isCompleted ? '0.7' : '1';
+
+                modal.classList.remove('hidden');
+                modal.setAttribute('aria-hidden', 'false');
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.setAttribute('aria-hidden', 'true');
+                activeLessonId = null;
+            }
+
+            function updateProgressUI() {
+                const lessonList = (typeof lessons !== 'undefined' && Array.isArray(lessons)) ? lessons : [];
+                if (lessonList.length === 0) return;
+
+                const total = lessonList.length;
+                const completedCount = Object.keys(userProgress).filter(id => userProgress[id]).length;
+                const percentage = Math.round((completedCount / total) * 100);
+
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${percentage}% completado (${completedCount}/${total})`;
+            }
+
+            function getStoredProgress() {
+                try {
+                    const data = localStorage.getItem('sea2_progress');
+                    return data ? JSON.parse(data) : {};
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            function saveProgress(progressObj) {
+                try {
+                    localStorage.setItem('sea2_progress', JSON.stringify(progressObj));
+                } catch (e) {}
+            }
+
+            function escapeHTML(str) {
+                return str.replace(/[&<>'"]/g, 
+                    tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+                );
+            }
+        });
+    </script>
 </body>
 </html>
