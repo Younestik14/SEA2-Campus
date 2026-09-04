@@ -346,12 +346,12 @@
             </div>
 
             <div id="lessons-grid" class="lessons-grid">
-                <!-- Las lecciones se renderizan dinámicamente -->
+                <!-- Se cargan dinámicamente -->
             </div>
         </section>
     </main>
 
-    <!-- Modal de Lectura de Lección -->
+    <!-- Modal de Lectura -->
     <div id="lesson-modal" class="modal hidden" aria-hidden="true">
         <div class="modal-overlay" tabindex="-1" data-close="true"></div>
         <div class="modal-card">
@@ -360,7 +360,7 @@
                 <button class="close-btn" data-close="true">&times;</button>
             </header>
             <div id="modal-body" class="modal-body">
-                <!-- Contenido de la lección -->
+                <!-- Contenido dinámico -->
             </div>
             <footer class="modal-footer">
                 <button id="mark-complete-btn" class="btn btn-primary">Marcar como Completada</button>
@@ -369,37 +369,37 @@
     </div>
 
     <script>
-        // Array global de lecciones integrado directamente
-        window.lessons = [
+        // Lecciones completas del plan de estudio
+        const lessonsData = [
             {
                 id: 1,
                 title: "Unidad 1: Introducción a los Sistemas Automatizados",
-                description: "Conceptos básicos de automatización industrial, arquitecturas y componentes de control.",
-                content: "<p>Esta unidad introduce los conceptos fundamentales de los sistemas de automatización industrial, el papel de los autómatas programables (PLC) y la estructura general de los procesos automatizados.</p>"
+                description: "Conceptos fundamentales de automatización industrial y arquitecturas de control.",
+                content: "<p>Esta unidad introduce los principios esenciales de los sistemas automatizados, los autómatas programables (PLC) y la estructura básica de los cuadros de control industrial.</p>"
             },
             {
                 id: 2,
                 title: "Unidad 2: Esquemas Eléctricos y Simulación",
-                description: "Representación simbólica, lectura de planos y simulación en software especializado.",
-                content: "<p>Aprende las normativas técnicas de diseño eléctrico, la identificación de componentes en esquemas (fuerza y maniobra) y el uso de herramientas de simulación CAD.</p>"
+                description: "Normativa de representación, interpretación de planos y herramientas CAD/SIMU.",
+                content: "<p>Aprende las normativas internacionales de representación esquemática, la distribución de circuitos de fuerza y maniobra, y el uso de software de simulación.</p>"
             },
             {
                 id: 3,
                 title: "Unidad 3: Programación de Autómatas Programables (PLC)",
-                description: "Lenguajes de programación estándar (Ladder, FBD) y lógica de control.",
-                content: "<p>Estudio de los lenguajes según la norma IEC 61131-3, estructuración de programas de control, marcas, temporizadores y contadores.</p>"
+                description: "Lenguajes de programación estándar (Ladder, FBD) según la norma IEC 61131-3.",
+                content: "<p>Estudio de estructuras de programación en lógica de contactos (Ladder), bloques funcionales (FBD), temporizadores, contadores y marcas internas de memoria.</p>"
             },
             {
                 id: 4,
                 title: "Unidad 4: Sensores y Actuadores Industriales",
-                description: "Dispositivos de entrada y salida en entornos industriales y sus aplicaciones.",
-                content: "<p>Análisis de captadores de presencia, sensores analógicos de temperatura/presión y accionamientos como contactores, variadores de frecuencia y cilindros neumáticos.</p>"
+                description: "Captadores, transductores y elementos finales de control en entornos industriales.",
+                content: "<p>Análisis de sensores discretos y analógicos (detectores inductivos, capacitivos, temperatura) y accionamientos finales como contactores, variadores de frecuencia y electroválvulas.</p>"
             }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
             let userProgress = getStoredProgress();
-            let currentActiveFilter = 'all';
+            let currentFilter = 'all';
             let activeLessonId = null;
 
             const grid = document.getElementById('lessons-grid');
@@ -412,27 +412,27 @@
             const modalBody = document.getElementById('modal-body');
             const markCompleteBtn = document.getElementById('mark-complete-btn');
 
+            // Tema persistente
             const savedTheme = localStorage.getItem('sea2_theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
             themeToggleBtn.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
 
-            renderLessons();
-            updateProgressUI();
+            render();
 
             themeToggleBtn.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('sea2_theme', newTheme);
-                themeToggleBtn.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const nextTheme = isDark ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', nextTheme);
+                localStorage.setItem('sea2_theme', nextTheme);
+                themeToggleBtn.textContent = nextTheme === 'dark' ? '☀️' : '🌙';
             });
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     filterBtns.forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
-                    currentActiveFilter = e.target.getAttribute('data-filter');
-                    renderLessons();
+                    currentFilter = e.target.getAttribute('data-filter');
+                    render();
                 });
             });
 
@@ -446,25 +446,27 @@
                 if (activeLessonId) {
                     userProgress[activeLessonId] = !userProgress[activeLessonId];
                     saveProgress(userProgress);
-                    updateProgressUI();
-                    renderLessons();
+                    render();
                     closeModal();
                 }
             });
 
-            function renderLessons() {
-                grid.innerHTML = '';
-                const lessonList = window.lessons || [];
+            function render() {
+                renderGrid();
+                updateProgressUI();
+            }
 
-                const filtered = lessonList.filter(lesson => {
+            function renderGrid() {
+                grid.innerHTML = '';
+                const filtered = lessonsData.filter(lesson => {
                     const isCompleted = !!userProgress[lesson.id];
-                    if (currentActiveFilter === 'completed') return isCompleted;
-                    if (currentActiveFilter === 'pending') return !isCompleted;
+                    if (currentFilter === 'completed') return isCompleted;
+                    if (currentFilter === 'pending') return !isCompleted;
                     return true;
                 });
 
                 if (filtered.length === 0) {
-                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No se encontraron lecciones en esta sección.</p>';
+                    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No hay unidades en este estado.</p>';
                     return;
                 }
 
@@ -475,34 +477,32 @@
                     card.innerHTML = `
                         <div>
                             <h3 class="card-title">${escapeHTML(lesson.title)}</h3>
-                            <p class="card-desc">${escapeHTML(lesson.description || '')}</p>
+                            <p class="card-desc">${escapeHTML(lesson.description)}</p>
                         </div>
                         <div class="card-footer">
                             <span class="badge ${isCompleted ? 'badge-completed' : 'badge-pending'}">
                                 ${isCompleted ? 'Completada' : 'Pendiente'}
                             </span>
-                            <button class="btn btn-primary open-lesson-btn" data-id="${lesson.id}">Ver Lección</button>
+                            <button class="btn btn-primary open-btn" data-id="${lesson.id}">Ver Lección</button>
                         </div>
                     `;
                     grid.appendChild(card);
                 });
 
-                document.querySelectorAll('.open-lesson-btn').forEach(btn => {
+                document.querySelectorAll('.open-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        const id = e.target.getAttribute('data-id');
-                        openLessonModal(id);
+                        openModal(e.target.getAttribute('data-id'));
                     });
                 });
             }
 
-            function openLessonModal(id) {
-                const lessonList = window.lessons || [];
-                const lesson = lessonList.find(l => l.id == id);
+            function openModal(id) {
+                const lesson = lessonsData.find(l => l.id == id);
                 if (!lesson) return;
 
                 activeLessonId = lesson.id;
                 modalTitle.textContent = lesson.title;
-                modalBody.innerHTML = lesson.content || '<p>Contenido no disponible.</p>';
+                modalBody.innerHTML = lesson.content;
 
                 const isCompleted = !!userProgress[lesson.id];
                 markCompleteBtn.textContent = isCompleted ? 'Marcar como Pendiente' : 'Marcar como Completada';
@@ -518,12 +518,9 @@
             }
 
             function updateProgressUI() {
-                const lessonList = window.lessons || [];
-                if (lessonList.length === 0) return;
-
-                const total = lessonList.length;
+                const total = lessonsData.length;
                 const completedCount = Object.keys(userProgress).filter(id => userProgress[id]).length;
-                const percentage = Math.round((completedCount / total) * 100);
+                const percentage = total > 0 ? Math.round((completedCount / total) * 100) : 0;
 
                 progressBar.style.width = `${percentage}%`;
                 progressText.textContent = `${percentage}% completado (${completedCount}/${total})`;
@@ -531,23 +528,22 @@
 
             function getStoredProgress() {
                 try {
-                    const data = localStorage.getItem('sea2_progress');
-                    return data ? JSON.parse(data) : {};
+                    return JSON.parse(localStorage.getItem('sea2_progress')) || {};
                 } catch (e) {
                     return {};
                 }
             }
 
-            function saveProgress(progressObj) {
+            function saveProgress(obj) {
                 try {
-                    localStorage.setItem('sea2_progress', JSON.stringify(progressObj));
+                    localStorage.setItem('sea2_progress', JSON.stringify(obj));
                 } catch (e) {}
             }
 
             function escapeHTML(str) {
-                return str.replace(/[&<>'"]/g, 
-                    tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-                );
+                return str.replace(/[&<>'"]/g, tag => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+                }[tag] || tag));
             }
         });
     </script>
